@@ -1,0 +1,32 @@
+.dog-details-container {
+  text-align: center;
+}
+h1 {
+  color: white;
+  font-size: 48px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.detail_info {
+  background-color: grey;
+}
+
+.details-button {
+  color: #fff;
+  background-color: #000;
+  font-size: 24px;
+  margin-right: 20px;
+  transition: all 0.2s ease-in-out;
+}
+
+.details-button:hover {
+  color: #f1c40f;
+}
+
+.dog-details-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 50%;
+  height: auto;
+}

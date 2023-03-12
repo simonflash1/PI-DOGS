@@ -1,0 +1,27 @@
+.card {
+    background-color: #222;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 0 #777;
+    transition: 0.3s;
+}
+
+.card:hover {
+    box-shadow: 10px 10px 0 #fff;
+    transform: scale(1.1);
+}
+
+.card-title {
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffeb3b;
+}
+
+
+.card-temperaments {
+    display: inline-block;
+    color: #777;
+    font-size: 16px;
+    margin-right: 5px;
+}

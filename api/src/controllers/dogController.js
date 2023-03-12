@@ -22,12 +22,20 @@ const cleanInfo = function (data) {
 }
 
 
+
 // FUNCION PARA TRAER TODOS LOS PERROS ------- DB Y API
 
 const getAllDogs = async () => {
   const apiInfo = (await axios.get("https://api.thedogapi.com/v1/breeds")).data
   const infoCleaned = cleanInfo(apiInfo)
-  const dbInfo = await Dog.findAll()
+  const dbInfo = await Dog.findAll({
+    include: {
+      model: Temperaments,
+      through: {
+        attributes: []
+      }
+    }
+  })
   return [...dbInfo, ...infoCleaned]
 }
 
@@ -41,7 +49,8 @@ const getDogByName = async (name) => {
     resultado = infoDBFiltered;
   } else {
     const apiInfoByName = (await axios.get(`https://api.thedogapi.com/v1/breeds`)).data
-    const infoFiltered = apiInfoByName.filter(dog => dog.name === name)
+    const infoCleaned = cleanInfo(apiInfoByName)
+    const infoFiltered = infoCleaned.filter(dog => dog.name === name)
     if (infoFiltered.length === 0) {
       throw new Error(`No se encontraron resultados para la búsqueda "${name}"`);
     }
@@ -49,7 +58,7 @@ const getDogByName = async (name) => {
   }
   return resultado;
 }
-//console.log(getDogByName("Affenpinscher"))
+
 
 //  FUNCION QUE TRAE LA INFORMACION DE UN PERRO POR ID -----------
 
@@ -64,7 +73,7 @@ const getDogById = async (id) => {
       include: [Temperaments]
     })
     if (infoDB.length > 0) {
-      resultado = infoDB;
+      resultado = infoDB[0].dataValues;
     }
   } else {
     const apiInfo = (await axios.get(`https://api.thedogapi.com/v1/breeds/${id}`)).data
@@ -79,14 +88,14 @@ const getDogById = async (id) => {
 //  FUNCION PARA CREAR UNA RAZA DE PERROS EN LA BASE DE DATOS --------
 
 
-const createDogDB = async ({ name, image, height, weight, temperaments, life_span }) => {
+const createDogDB = async ({ name, image, height_min, height_max, weight_min, weight_max, temperaments, life_span }) => {
   await getTemperaments()
   try {
-    if (!name || !height || !weight || !life_span || !temperaments) {
+    if (!name || !height_min || !height_max|| !weight_min|| !weight_max || !life_span || !temperaments) {
       throw new Error('Faltan datos requeridos para crear la raza.');
     }
 
-    const dog = await Dog.create({ name, image, height, weight, life_span });
+    const dog = await Dog.create({ name, image, height_min, height_max, weight_min, weight_max, temperaments, life_span });
 
 
     for (let temperament of temperaments) {

@@ -39,9 +39,9 @@ const getDogID = async (req, res) => {
 
 const createDog = (req, res) => {
 
-    const { name, image, height, weight, temperaments, life_span } = req.body
+    const { name, image, height_min, height_max, weight_min, weight_max, temperaments, life_span } = req.body
     try {
-        const response = createDogDB({ name, image, height, weight, temperaments, life_span })
+        const response = createDogDB({ name, image, height_min, height_max, weight_min, weight_max, temperaments, life_span })
         res.status(200).json(response + "Creado con exito")
     } catch (error) {
         res.status(400).json({ message: error.message })
