@@ -13,7 +13,7 @@ const cleanInfo = function (data) {
       name: dog.name,
       height: dog.height.metric?.split(' - '),
       weight: dog.weight.metric?.split(' - '),
-      temperament: dog.temperament?.split(', '),
+      temperament: dog.temperament,
       life_span: dog.life_span,
       created: dog.created
     }
@@ -29,15 +29,28 @@ const getAllDogs = async () => {
   const apiInfo = (await axios.get("https://api.thedogapi.com/v1/breeds")).data
   const infoCleaned = cleanInfo(apiInfo)
   const dbInfo = await Dog.findAll({
-    include: {
-      model: Temperaments,
-      through: {
-        attributes: []
-      }
-    }
+    include: Temperaments,
   })
-  return [...dbInfo, ...infoCleaned]
+  dbInfoCleaned = dbInfo.map((el) => {
+    return {
+      id: el.id,
+      name: el.name,
+      height_min: el.height_min,
+      height_max: el.height_max,
+      weight_min: el.weight_min,
+      weight_max: el.weight_max,
+      life_span: el.life_span,
+      image: el.image,
+      created: true,
+      temperaments: el.temperaments.map((i) => {
+        return i.name;
+      }).join(", "),
+    };
+  });
+
+  return [...dbInfoCleaned, ...infoCleaned]
 }
+
 
 //  FUNCION QUE TRAE UN PERRO POR QUERY (name) ------------
 
@@ -91,7 +104,7 @@ const getDogById = async (id) => {
 const createDogDB = async ({ name, image, height_min, height_max, weight_min, weight_max, temperaments, life_span }) => {
   await getTemperaments()
   try {
-    if (!name || !height_min || !height_max|| !weight_min|| !weight_max || !life_span || !temperaments) {
+    if (!name || !height_min || !height_max || !weight_min || !weight_max || !life_span || !temperaments) {
       throw new Error('Faltan datos requeridos para crear la raza.');
     }
 

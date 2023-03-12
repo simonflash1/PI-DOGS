@@ -17,7 +17,7 @@ export const CardsContainer = ( {currentDogs} ) => {
           id={dog.id}
           image={dog.image}
           name={dog.name}
-          temperaments={dog.temperament ? dog.temperament : dog.temperaments.map(t => t.name)}
+          temperaments={dog.temperament ? dog.temperament : dog.temperaments}
           weight_min={dog.weight_min ? dog.weight_min : dog.weight[0]}
           weight_max={dog.weight_max ? dog.weight_max : dog.weight[1]}
         />

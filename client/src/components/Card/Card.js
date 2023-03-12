@@ -11,7 +11,7 @@ export const Card = ({ id, image, name, temperaments, weight_min, weight_max }) 
           {name || 'No name provided'}
         </Link>
       </p>
-      <p className="card-temperaments">Temperaments: {Array.isArray(temperaments) ? temperaments.join(", ") : 'No Temperaments provided'}</p>
+      <p className="card-temperaments">Temperaments: {temperaments}</p>
       <p className="card-info">Dog Weight: {weight_min} kg to {weight_max} kg</p>
     </div>
   )

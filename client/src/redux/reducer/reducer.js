@@ -62,7 +62,8 @@ export default function rootReducer(state = initialState, action) {
         case GET_DOGS_BY_TEMP:
             return {
                 ...state,
-                filtered: action.payload
+                filtered: action.payload,
+                allDogs: action.payload
             };
 
 

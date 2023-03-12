@@ -1,26 +1,26 @@
 import axios from "axios"
 import {
-    GET_ALL_DOGS,
-    SEARCH_BY_NAME,
-    GET_DOG_DETAILS,
-    GET_TEMPERAMENTS,
-    GET_DOGS_BY_TEMP,
-    ORDER_BY,
-    FILTER_BY
+  GET_ALL_DOGS,
+  SEARCH_BY_NAME,
+  GET_DOG_DETAILS,
+  GET_TEMPERAMENTS,
+  GET_DOGS_BY_TEMP,
+  ORDER_BY,
+  FILTER_BY
 } from "./constantes.js"
 
 
 
 // FUNCION PARA TRAER TODAS LAS RAZAS----------(DB Y API)
 export function getAllDogs() {
-    return async function (dispatch) {
-        try {
-            const res = await axios.get("http://localhost:3001/dogs/");
-            dispatch({ type: GET_ALL_DOGS, payload: res.data });
-        } catch (err) {
-            return err;
-        }
+  return async function (dispatch) {
+    try {
+      const res = await axios.get("http://localhost:3001/dogs/");
+      dispatch({ type: GET_ALL_DOGS, payload: res.data });
+    } catch (err) {
+      return err;
     }
+  }
 }
 
 
@@ -28,14 +28,14 @@ export function getAllDogs() {
 // FUNCION QUE TRAE UNA RAZA POR QUERY (name) ------------
 
 export function searchByName(name) {
-    return async function (dispatch) {
-        try {
-            const res = await axios.get(`http://localhost:3001/dogs?name=${name}`);
-            dispatch({ type: SEARCH_BY_NAME, payload: res.data });
-        } catch (err) {
-            return err;
-        }
-    };
+  return async function (dispatch) {
+    try {
+      const res = await axios.get(`http://localhost:3001/dogs?name=${name}`);
+      dispatch({ type: SEARCH_BY_NAME, payload: res.data });
+    } catch (err) {
+      return err;
+    }
+  };
 }
 
 
@@ -43,63 +43,63 @@ export function searchByName(name) {
 //   FUNCION QUE TRAE UNA RAZA POR ID --------
 
 export function getDogDetail(id) {
-    return async function(dispatch) {
-      try {
-        const res = await axios.get(`http://localhost:3001/dogs/${id}`);
-        dispatch({ type: GET_DOG_DETAILS, payload: res.data });
-      } catch(error) {
-        console.error(new Error(error));
-      }
-    };
-  }
+  return async function (dispatch) {
+    try {
+      const res = await axios.get(`http://localhost:3001/dogs/${id}`);
+      dispatch({ type: GET_DOG_DETAILS, payload: res.data });
+    } catch (error) {
+      console.error(new Error(error));
+    }
+  };
+}
 
 
 
 //  FUNCION QUE TRAE TODOS LOS TEMPERAMENTOS
 export function getTemperaments() {
-    return function (dispatch) {
-        axios
-            .get(`http://localhost:3001/temperaments`)
-            .then((res) => {
-                dispatch({ type: GET_TEMPERAMENTS, payload: res.data });
-            })
-            .catch((err) => {
-                return err;
-            });
-    };
+  return function (dispatch) {
+    axios
+      .get(`http://localhost:3001/temperaments`)
+      .then((res) => {
+        dispatch({ type: GET_TEMPERAMENTS, payload: res.data });
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
 }
 
 // FUNCION QUE TRAE LOS PERROS POR TEMPERAMENTOS
 
 export function getDogsByTemperament(temp) {
-    return async function (dispatch) {
-      try {
-        const res = await axios.get("http://localhost:3001/dogs/");
-        let aux = res.data.filter((el) => {
-          return el.temperaments && el.temperaments.some((t) => t.name === temp);
-        });
-  
-        dispatch({
-          type: GET_DOGS_BY_TEMP,
-          payload: aux,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-  }
-  
+  return async function (dispatch) {
+    try {
+      const resp = await axios.get("http://localhost:3001/dogs/");
+      let aux = resp.data.filter((el) => {
+        return el.temperaments && el.temperaments.split(", ").includes(temp);
+      });
+      let res = aux;
+      dispatch({
+        type: GET_DOGS_BY_TEMP,
+        payload: res,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 
 // Ordenamiento
 export function orderBy(order) {
-    return function (dispatch) {
-        dispatch({ type: ORDER_BY, payload: order });
-    };
+  return function (dispatch) {
+    dispatch({ type: ORDER_BY, payload: order });
+  };
 }
 
 //* Filtrado
 export function filterBy(order) {
-    return function (dispatch) {
-        dispatch({ type: FILTER_BY, payload: order });
-    };
+  return function (dispatch) {
+    dispatch({ type: FILTER_BY, payload: order });
+  };
 }
