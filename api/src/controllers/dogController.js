@@ -15,7 +15,7 @@ const cleanInfo = function (data) {
       weight: dog.weight.metric?.split(' - '),
       temperament: dog.temperament,
       life_span: dog.life_span,
-      created: dog.created
+      created: false
     }
   })
   return response;
@@ -42,7 +42,7 @@ const getAllDogs = async () => {
       life_span: el.life_span,
       image: el.image,
       created: true,
-      temperaments: el.temperaments.map((i) => {
+      temperament: el.temperaments.map((i) => {
         return i.name;
       }).join(", "),
     };

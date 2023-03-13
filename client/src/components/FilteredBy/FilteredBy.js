@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { orderBy, filterBy, getDogsByTemperament } from '../../redux/actions/actions';
+import { orderBy, filterBy } from '../../redux/actions/actions';
 import "./FilteredBy.css"
 
 
@@ -9,18 +9,11 @@ export const FilteredBy = () => {
 
     const dispatch = useDispatch();
     const temperaments = useSelector(state => state.temperaments);
-    const [temp, setTemp] = useState([])
 
-    useEffect(() => {
-        console.log(temp);
-        dispatch(getDogsByTemperament({ temperaments: temp }));
-      }, [temp, dispatch]);
-
-      const handlerTemperaments = (event) => {
-        const values = Array.from(event.target.selectedOptions, option => option.value);
-        setTemp([...temp, ...values]);
+    const handleTemperaments = (e) => {
+        dispatch(filterBy(e.target.value));
       }
-      
+
     const handleFilterChange = (e) => {
         dispatch(filterBy(e.target.value));
     }
@@ -44,10 +37,10 @@ export const FilteredBy = () => {
 
 
             </select>
-            <select className="selectCont" onChange={handlerTemperaments} name="temperaments">
-            <option className="option" value="default">TEMPERAMENTOS...</option>
+            <select className="selectCont" onChange={handleTemperaments} name="temperaments">
+                <option className="option" value="default">TEMPERAMENTOS...</option>
                 <optgroup className="optionGroup" label="Temperaments" >
-                    {temperaments && temperaments.map(t => <option key={t} value={t}>{t}</option>)}
+                    {temperaments && temperaments.map(t => <option value={t}>{t}</option>)}
                 </optgroup>
             </select>
 

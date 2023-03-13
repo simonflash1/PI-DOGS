@@ -4,7 +4,7 @@ import {
   SEARCH_BY_NAME,
   GET_DOG_DETAILS,
   GET_TEMPERAMENTS,
-  GET_DOGS_BY_TEMP,
+//GET_DOGS_BY_TEMP,
   ORDER_BY,
   FILTER_BY
 } from "./constantes.js"
@@ -66,26 +66,6 @@ export function getTemperaments() {
       .catch((err) => {
         return err;
       });
-  };
-}
-
-// FUNCION QUE TRAE LOS PERROS POR TEMPERAMENTOS
-
-export function getDogsByTemperament(temp) {
-  return async function (dispatch) {
-    try {
-      const resp = await axios.get("http://localhost:3001/dogs/");
-      let aux = resp.data.filter((el) => {
-        return el.temperaments && el.temperaments.split(", ").includes(temp);
-      });
-      let res = aux;
-      dispatch({
-        type: GET_DOGS_BY_TEMP,
-        payload: res,
-      });
-    } catch (error) {
-      console.log(error);
-    }
   };
 }
 

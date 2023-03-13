@@ -172,7 +172,7 @@ export const Form = () => {
                     <label>Temperamentos: </label>
                     <select multiple defaultValue={form.temperaments} onChange={changeHandlerArray} name="temperaments">
                         {temperament?.map(temperament => (
-                            <option key={temperament} value={temperament.name}>
+                            <option value={temperament.name}>
                                 {temperament}
                             </option>
                         ))}
