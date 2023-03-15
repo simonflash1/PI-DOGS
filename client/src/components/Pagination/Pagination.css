@@ -17,6 +17,13 @@
     background-color: #343a40;
 }
 
+.pagination-btn.active {
+    font-weight: 900;
+    border-color: #101010;
+    background: #ffe400;
+    color: #101010;
+}
+
 ul {
     list-style: none;
     display: flex;

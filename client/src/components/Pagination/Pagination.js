@@ -1,7 +1,7 @@
 import React from 'react'
 import "./Pagination.css"
 
-export const Pagination = ({ dogsPerPage, totaldogs, setCurrentPage }) => {
+export const Pagination = ({ dogsPerPage, totaldogs, setCurrentPage, currentPage }) => {
 
     const pageNumbers = [];
   
@@ -20,7 +20,7 @@ export const Pagination = ({ dogsPerPage, totaldogs, setCurrentPage }) => {
             pageNumbers.map(n => {
               return (
                 <li key={n}>
-                  <button className="pagination-btn" value={n} onClick={e => paginated(e)}>{n}</button>
+                  <button className={`pagination-btn ${n === currentPage ? 'active' : ''}`} value={n} onClick={e => paginated(e)}>{n}</button>
                 </li>
               )
             })

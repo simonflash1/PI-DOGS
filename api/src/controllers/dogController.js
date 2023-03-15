@@ -32,11 +32,15 @@ const getAllDogs = async () => {
     include: Temperaments,
   })
   dbInfoCleaned = dbInfo.map((el) => {
+    const height = [el.height_min, el.height_max].sort((a, b) => a - b);
+  const weight = [el.weight_min, el.weight_max].sort((a, b) => a - b);
     return {
       id: el.id,
       name: el.name,
       height_min: el.height_min,
       height_max: el.height_max,
+      height: height,
+      weight: weight,
       weight_min: el.weight_min,
       weight_max: el.weight_max,
       life_span: el.life_span,

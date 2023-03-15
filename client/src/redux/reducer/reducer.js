@@ -54,7 +54,7 @@ export default function rootReducer(state = initialState, action) {
         } else if (action.payload === 'DB') {
             return { ...state, filtered: state.filtered.filter((dog) => dog.created) }
         } else if (action.payload === 'API') {
-            return { ...state, filtered: state.filtered.filter((dog) => !dog.created) }
+            return { ...state, filtered: state.filtered.filter((dog) => dog.created === false) }
         } else {
             const filteredDogs = state.allDogs.filter((dog) => {
                 return dog.temperament && dog.temperament.includes(action.payload)

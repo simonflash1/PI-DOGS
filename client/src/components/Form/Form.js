@@ -18,30 +18,30 @@ export const Form = () => {
         if (!form.height_min.trim()) {
             errors.height_min = "Este campo es requerido";
         } else if (isNaN(form.height_min)) {
-            errors.height_min = "Ingrese un número válido";
-        } 
+            errors.height_min = "Ingrese un número";
+        }
 
         if (!form.height_max.trim()) {
             errors.height = "Este campo es requerido";
         } else if (isNaN(form.height_max)) {
-            errors.height_max = "Ingrese un número válido";
+            errors.height_max = "Ingrese un número";
         }
 
         if (!form.weight_min.trim()) {
             errors.weight_min = "Este campo es requerido";
         } else if (isNaN(form.weight_min)) {
-            errors.weight_min = "Ingrese un número válido";
+            errors.weight_min = "Ingrese un número";
         }
         if (!form.weight_max.trim()) {
             errors.weight_max = "Este campo es requerido";
         } else if (isNaN(form.weight_max)) {
-            errors.weight_max = "Ingrese un número válido";
+            errors.weight_max = "Ingrese un número";
         }
 
         if (!form.life_span.trim()) {
             errors.life_span = "Este campo es requerido";
         } else if (isNaN(form.life_span)) {
-            errors.life_span = "Ingrese un número válido";
+            errors.life_span = "Ingrese un número";
         }
 
         if (form.temperaments.length === 0) {
@@ -73,9 +73,9 @@ export const Form = () => {
     //   FUNCION PARA SETEAR EL ESTADO QUE SE VA A ENVIAR PARA LA CREACION
     const [form, setForm] = useState({
         name: "",
-        height_min : "",
-        height_max : "",
-        weight_min : "",
+        height_min: "",
+        height_max: "",
+        weight_min: "",
         weight_max: "",
         life_span: "",
         temperaments: [],
@@ -87,9 +87,9 @@ export const Form = () => {
     //  FUNCION PARA SETEAR ESTADO DE ERROR
     const [errors, setErrors] = useState({
         name: "",
-        height_min : "",
-        height_max : "",
-        weight_min : "",
+        height_min: "",
+        height_max: "",
+        weight_min: "",
         weight_max: "",
         life_span: "",
         temperaments: [],
@@ -124,8 +124,8 @@ export const Form = () => {
         setErrors(formErrors);
         console.log(errors)
         if (Object.keys(formErrors).length === 0) {
-            axios.post("http://localhost:3001/dogs", form)
-                .then(res => alert(res))
+            axios.post("/dogs", form)
+                .then(res => alert("Creado con exito"))
                 .catch(error => console.log(error.message))
         }
     }
@@ -142,29 +142,29 @@ export const Form = () => {
                 </div>
                 <div>
                     <label>Altura Minima: </label>
-                    <input type="text" value={form.height_min} onChange={changeHandler} name="height_min" placeholder='Ingrese una Altura Minima'></input>
+                    <input type="text" value={form.height_min} onChange={changeHandler} name="height_min" placeholder='Ingrese Centimetros'></input>
                     {errors.height_min && <div className='error'>{errors.height_min}</div>}
 
                 </div>
                 <div>
                     <label>Altura Maxima: </label>
-                    <input type="text" value={form.height_max} onChange={changeHandler} name="height_max" placeholder='Ingrese una Altura Maxima'></input>
+                    <input type="text" value={form.height_max} onChange={changeHandler} name="height_max" placeholder='Ingrese Centimetros'></input>
                     {errors.height_max && <div className='error'>{errors.height_max}</div>}
 
                 </div>
                 <div>
                     <label>Peso Minimo: </label>
-                    <input type="text" value={form.weight_min} onChange={changeHandler} name="weight_min" placeholder='Ingrese un Peso Minimo'></input>
+                    <input type="text" value={form.weight_min} onChange={changeHandler} name="weight_min" placeholder='Ingrese KGs'></input>
                     {errors.weight_min && <div className='error'>{errors.weight_min}</div>}
                 </div>
                 <div>
                     <label>Peso Maximo: </label>
-                    <input type="text" value={form.weight_max} onChange={changeHandler} name="weight_max" placeholder='Ingrese un Peso Maximo'></input>
+                    <input type="text" value={form.weight_max} onChange={changeHandler} name="weight_max" placeholder='Ingrese KGs'></input>
                     {errors.weight_max && <div className='error'>{errors.weight_max}</div>}
                 </div>
                 <div>
                     <label>Esperanza de Vida: </label>
-                    <input type="text" value={form.life_span} onChange={changeHandler} name="life_span" placeholder='Ingrese Espectativa de vida'></input>
+                    <input type="text" value={form.life_span} onChange={changeHandler} name="life_span" placeholder='Ingrese Años'></input>
                     {errors.life_span && <div className='error'>{errors.life_span}</div>}
                 </div>
 
@@ -172,12 +172,20 @@ export const Form = () => {
                     <label>Temperamentos: </label>
                     <select multiple defaultValue={form.temperaments} onChange={changeHandlerArray} name="temperaments">
                         {temperament?.map(temperament => (
-                            <option value={temperament.name}>
+                            <option key={temperament.id} value={temperament.name}>
                                 {temperament}
                             </option>
                         ))}
                     </select>
                     {errors.temperaments && <p className="error">{errors.temperaments}</p>}
+                </div>
+                <div>
+                    <h2>Temperamentos Seleccionados:</h2>
+                    <ul>
+                        {form.temperaments.map((temperament) => (
+                            <li key={temperament}>{temperament}</li>
+                        ))}
+                    </ul>
                 </div>
 
                 <div>

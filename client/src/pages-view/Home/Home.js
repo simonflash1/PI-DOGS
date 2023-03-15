@@ -40,6 +40,7 @@ export const Home = () => {
         dogsPerPage={dogsPerPage}
         totaldogs={allDogs.length}
         setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
       />
       <FilteredBy temperaments={temperaments}/>
       <CardsContainer currentDogs={currentDogs} />
