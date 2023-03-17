@@ -19,7 +19,7 @@ export const Form = () => {
             errors.height_min = "Este campo es requerido";
         } else if (isNaN(form.height_min)) {
             errors.height_min = "Ingrese un número";
-        }
+        } 
 
         if (!form.height_max.trim()) {
             errors.height = "Este campo es requerido";
@@ -73,9 +73,9 @@ export const Form = () => {
     //   FUNCION PARA SETEAR EL ESTADO QUE SE VA A ENVIAR PARA LA CREACION
     const [form, setForm] = useState({
         name: "",
-        height_min: "",
-        height_max: "",
-        weight_min: "",
+        height_min : "",
+        height_max : "",
+        weight_min : "",
         weight_max: "",
         life_span: "",
         temperaments: [],
@@ -87,9 +87,9 @@ export const Form = () => {
     //  FUNCION PARA SETEAR ESTADO DE ERROR
     const [errors, setErrors] = useState({
         name: "",
-        height_min: "",
-        height_max: "",
-        weight_min: "",
+        height_min : "",
+        height_max : "",
+        weight_min : "",
         weight_max: "",
         life_span: "",
         temperaments: [],
@@ -124,8 +124,8 @@ export const Form = () => {
         setErrors(formErrors);
         console.log(errors)
         if (Object.keys(formErrors).length === 0) {
-            axios.post("/dogs", form)
-                .then(res => alert("Creado con exito"))
+            axios.post("http://localhost:3001/dogs", form)
+                .then(res => alert(res))
                 .catch(error => console.log(error.message))
         }
     }
@@ -142,29 +142,29 @@ export const Form = () => {
                 </div>
                 <div>
                     <label>Altura Minima: </label>
-                    <input type="text" value={form.height_min} onChange={changeHandler} name="height_min" placeholder='Ingrese Centimetros'></input>
+                    <input type="text" value={form.height_min} onChange={changeHandler} name="height_min" placeholder='Ingrese una Altura Minima'></input>
                     {errors.height_min && <div className='error'>{errors.height_min}</div>}
 
                 </div>
                 <div>
                     <label>Altura Maxima: </label>
-                    <input type="text" value={form.height_max} onChange={changeHandler} name="height_max" placeholder='Ingrese Centimetros'></input>
+                    <input type="text" value={form.height_max} onChange={changeHandler} name="height_max" placeholder='Ingrese una Altura Maxima'></input>
                     {errors.height_max && <div className='error'>{errors.height_max}</div>}
 
                 </div>
                 <div>
                     <label>Peso Minimo: </label>
-                    <input type="text" value={form.weight_min} onChange={changeHandler} name="weight_min" placeholder='Ingrese KGs'></input>
+                    <input type="text" value={form.weight_min} onChange={changeHandler} name="weight_min" placeholder='Ingrese un Peso Minimo'></input>
                     {errors.weight_min && <div className='error'>{errors.weight_min}</div>}
                 </div>
                 <div>
                     <label>Peso Maximo: </label>
-                    <input type="text" value={form.weight_max} onChange={changeHandler} name="weight_max" placeholder='Ingrese KGs'></input>
+                    <input type="text" value={form.weight_max} onChange={changeHandler} name="weight_max" placeholder='Ingrese un Peso Maximo'></input>
                     {errors.weight_max && <div className='error'>{errors.weight_max}</div>}
                 </div>
                 <div>
                     <label>Esperanza de Vida: </label>
-                    <input type="text" value={form.life_span} onChange={changeHandler} name="life_span" placeholder='Ingrese Años'></input>
+                    <input type="text" value={form.life_span} onChange={changeHandler} name="life_span" placeholder='Ingrese Espectativa de vida'></input>
                     {errors.life_span && <div className='error'>{errors.life_span}</div>}
                 </div>
 
@@ -172,20 +172,12 @@ export const Form = () => {
                     <label>Temperamentos: </label>
                     <select multiple defaultValue={form.temperaments} onChange={changeHandlerArray} name="temperaments">
                         {temperament?.map(temperament => (
-                            <option key={temperament.id} value={temperament.name}>
+                            <option value={temperament.name}>
                                 {temperament}
                             </option>
                         ))}
                     </select>
                     {errors.temperaments && <p className="error">{errors.temperaments}</p>}
-                </div>
-                <div>
-                    <h2>Temperamentos Seleccionados:</h2>
-                    <ul>
-                        {form.temperaments.map((temperament) => (
-                            <li key={temperament}>{temperament}</li>
-                        ))}
-                    </ul>
                 </div>
 
                 <div>
@@ -205,7 +197,6 @@ Este formulario debe ser controlado completamente con JavaScritp.
 No se pueden utilizar validaciones HTML, 
 ni utilizar librerías especiales para esto. 
 Debe contar con los siguientes campos:
-
 Nombre.
 Altura (diferenciar entre altura mínima y máxima de la raza).
 Peso (diferenciar entre peso mínimo y máximo de la raza).
